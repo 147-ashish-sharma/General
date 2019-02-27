@@ -1,4 +1,5 @@
-#Maintaint the hostname
+# Step 1: Maintaint the hostnames in /etc/hosts
+# Step 2: Setup repos
 curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
 curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | sudo bash
 sudo yum install -y rabbitmq-server.noarch
@@ -6,19 +7,20 @@ chkconfig rabbitmq-server on
 service rabbitmq-server status
 service rabbitmq-server stop 
 service rabbitmq-server start
+# Step 3: rabbit service setup
 
 yum remove -y rabbitmq-server 
 yum remove -y erlang 
 find / -name *rabbit* |xargs rm -rf
 ps -ef|grep -i rabbit |awk '{print $2}'|xargs kill -9
 
-#Copy erlang_Cookie from master node 
+# Step 4: Copy erlang_Cookie from master node 
 ######################
-#On other nodes:
+# Step 5: On other nodes
 
 rabbitmqctl stop_app
 service rabbitmq-server stop
-echo -n "QZHKAFWQWANGDJKUMEIH" > /var/lib/rabbitmq/.erlang.cookie
+echo -n "<Master's erlang key>" > /var/lib/rabbitmq/.erlang.cookie
 service rabbitmq-server start
 rabbitmqctl stop_app
 rabbitmqctl reset
