@@ -1,0 +1,17 @@
+//Taken from: https://stackoverflow.com/questions/28050171/nodejs-random-free-tcp-ports
+
+You can bind to a random, free port assigned by the OS by specifying 0 for the port. This way you are not subject to race conditions (e.g. checking for an open port and some process binding to it before you get a chance to bind to it).
+
+Then you can get the assigned port by calling server.address().port.
+
+Example:
+
+var net = require('net');
+
+var srv = net.createServer(function(sock) {
+  sock.end('Hello world\n');
+});
+srv.listen(0, function() {
+  console.log('Listening on port ' + srv.address().port);
+});
+
