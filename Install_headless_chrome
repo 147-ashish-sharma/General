@@ -29,3 +29,7 @@
 386      wget http://mirror.centos.org/centos/7/os/x86_64/Packages/atk-2.28.1-1.el7.x86_64.rpm
 387      sudo rpm -ivh atk-2.28.1-1.el7.x86_64.rpm
 
+//Declaring the CHROME_BIN variable on agent which is executing, for e.g. for Node JS project, following entry is done in karma.conf.js file:
+process.env.CHROME_BIN = require('puppeteer').executablePath()
+
+
